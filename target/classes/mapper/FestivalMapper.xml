@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.acorn.FestivalMapper"> 
+    <!-- content 전체 갯수 -->
+    <select id="totalCnt" resultType="int">
+        SELECT COUNT(*)
+        FROM contentInfoTbl
+        <where>
+            <if test="sidoCode != 0">
+                AND sidoCode = #{sidoCode}
+            </if>
+            AND contenttypeid = '15' AND cat2 = 'A0207'
+        </where>
+    </select>
+    <!-- 지역별 최신순 content 10개씩 조회 -->
+    <select id="selectAllLatest" parameterType="map" resultType="ContentDTO">
+        SELECT *
+        FROM (
+            SELECT rownum AS num, contentid, title, sidoCode, sigungucode, firstimage
+            FROM (
+                SELECT *
+                FROM contentInfoTbl
+                <where>
+                    <if test="sidoCode != 0">
+                        AND sidoCode = #{sidoCode}
+                    </if>
+                    AND contenttypeid = '15' AND cat2 = 'A0207'
+                </where>
+                ORDER BY createdtime DESC
+            )
+        )
+        WHERE num BETWEEN #{startList} AND #{endList} 
+    </select>
+ 
+</mapper>

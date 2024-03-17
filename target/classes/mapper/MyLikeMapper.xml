@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.acorn.MyLikeMapper"> 
+    
+    <!-- 좋아요 삽입 -->
+	<insert id="updateContentLike" parameterType="Map">
+	    INSERT INTO liketbl (userId, contentId)
+	    VALUES (#{userId}, #{contentId})
+	</insert>
+	
+	<!-- 좋아요 삭제 -->
+	<delete id="deleteContentLike" parameterType="Map">
+	    DELETE FROM liketbl WHERE userId = #{userId} AND contentId = #{contentId}
+	</delete>
+	
+	<!-- 해당 게시물 좋아요 수 조회 -->
+	<select id="countLike" resultType="Integer" parameterType="String">
+	    SELECT COUNT(*) FROM liketbl WHERE contentId = #{contentId}
+	</select>
+	
+	<!-- 나의좋아요 조회 -->
+	<select id="mycountLike" resultType="Integer" parameterType="Map">
+	    SELECT COUNT(*) FROM liketbl WHERE userId = #{userId} AND contentId = #{contentId}
+	</select>
+	
+	<!-- 마이페이지 좋아요 목록 -->
+	<select id="myLike" resultType="LikeDTO" parameterType="String">
+	    SELECT li.userid, li.contentid, ct.contenttypeid, ct.title, 
+	           si.sidocode, si.nickname, sg.sigungucode, sg.name, ct.firstimage, ct.cat2, ct.mapx, ct.mapy 
+	    FROM liketbl li 
+	    JOIN contentInfoTbl ct ON li.contentid = ct.contentid 
+	    JOIN sidotbl si ON ct.sidocode = si.sidocode 
+	    JOIN sigungutbl sg ON ct.sigungucode = sg.sigungucode 
+	    WHERE userid = #{userId}
+	</select>
+    
+ 
+</mapper>

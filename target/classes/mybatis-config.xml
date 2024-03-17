@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="UserDTO" type="com.acorn.tour.user.UserDTO"/>
+		<typeAlias alias="ContentDTO" type="com.acorn.tour.content.ContentDTO"/>
+		<typeAlias alias="MycourseDTO" type="com.acorn.tour.mycourse.MycourseDTO"/>
+		<typeAlias alias="LikeDTO" type="com.acorn.tour.mylike.LikeDTO"/>
+		<typeAlias alias="MyQADTO" type="com.acorn.tour.myQA.MyQADTO"/>
+		<typeAlias alias="MyReviewDTO" type="com.acorn.tour.myreview.MyReviewDTO"/>
+		<typeAlias alias="ReviewDTO" type="com.acorn.tour.review.ReviewDTO"/>
+		<typeAlias alias="ImageDTO" type="com.acorn.tour.image.ImageDTO"/>
+		<typeAlias alias="SightDTO" type="com.acorn.tour.sights.SightDTO"/>
+		<typeAlias alias="TourlistSpot" type="com.acorn.tour.tourAlist.TourlistSpot"/>
+		<typeAlias alias="User" type="com.acorn.tour.touradmin.User"/>
+		<typeAlias alias="Sigungu" type="com.acorn.tour.sido.SigunguDTO"/>
+		<typeAlias alias="RecSpot" type="com.acorn.tour.recommend.RecSpot"/>
+		<typeAlias alias="RecRestaurant" type="com.acorn.tour.recommend.RecRestaurant"/>
+		<typeAlias alias="Sido" type="com.acorn.tour.sido.SidoDTO"/>
+		<typeAlias alias="RecCourse" type="com.acorn.tour.recommend.RecCourse"/>
+		<typeAlias alias="HotkokDTO" type="com.acorn.tour.hotkok.HotkokDTO"/>
+		<typeAlias alias="MapDTO" type="com.acorn.tour.map.MapDTO"/>
+		<typeAlias alias="CourseDTO" type="com.acorn.tour.course.CourseDTO"/>
+		<typeAlias alias="CourseContentDTO" type="com.acorn.tour.course.CourseContentDTO"/>
+	</typeAliases>
+
+</configuration>
+
+
+
+

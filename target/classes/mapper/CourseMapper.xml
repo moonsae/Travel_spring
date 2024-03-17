@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.acorn.CourseMapper">
+
+	<!-- content 전체 갯수 -->
+	<select id="totalCnt" resultType="java.lang.Integer" parameterType="int">
+	    SELECT COUNT(*) FROM contentInfoTbl
+	    <where>
+	        <if test="sidoCode != 0">
+	            AND sidoCode = #{sidoCode}
+	        </if>
+	        AND contenttypeid = '25'
+	    </where>
+	</select>
+	<!-- 지역별 최신순 content 10개씩 조회 -->
+	<select id="selectAllLatest" resultType="CourseDTO" parameterType="map">
+	    SELECT ct.contentid, ct.title, ct.sidoCode, sd.nickName, sg.sigungucode, sg.name, ct.firstimage
+        FROM (
+            SELECT rownum AS num, contentid, title, sidoCode, sigungucode, firstimage
+            FROM (
+                SELECT *
+                FROM contentInfoTbl
+                <where>
+                    <if test="sidoCode != 0">
+                        AND sidoCode = #{sidoCode}
+                    </if>
+                    AND contenttypeid = '25'
+                </where>
+                ORDER BY createdtime DESC
+            )
+        ) ct
+        JOIN SidoTbl sd ON sd.sidocode = ct.sidocode
+        JOIN SigunguTbl sg ON sg.sigungucode = ct.sigungucode
+        WHERE num BETWEEN #{startList} AND #{endList}
+        ORDER BY num
+	</select>
+	
+	<!-- 거리별 content 전체 -->
+	<select id="distanceAll" resultType="CourseDTO" parameterType="int">
+	    SELECT contentid, mapx, mapy
+	    FROM contentInfoTbl
+	    WHERE 
+	        <if test="sidoCode != 0">
+	            sidoCode = #{sidoCode}
+	        </if>
+	        AND contenttypeid = '25'
+	</select>
+	
+	<!-- 거리별로 정렬된 리스트 10개씩 표출 -->
+	<select id="selectAllDistance" resultType="CourseDTO" parameterType="String">
+	    SELECT ct.contentid, ct.title, ct.sidoCode, sd.nickName AS nickname, sg.sigungucode, sg.name, ct.firstimage
+	    FROM (
+	        SELECT contentid, title, sidoCode, sigungucode, firstimage
+	        FROM contentInfoTbl
+	        <where>
+	            <if test="sidoCode != 0">
+	                AND sidoCode = #{sidoCode}
+	            </if>
+	            <if test="contentIds != null">
+	                AND contentid IN
+	                <foreach collection="contentIds" item="contentId" open="(" close=")" separator=",">
+	                    #{contentId}
+	                </foreach>
+	            </if>
+	        </where>
+	    ) ct
+	    JOIN SidoTbl sd ON sd.sidocode = ct.sidoCode
+	    JOIN SigunguTbl sg ON sg.sigungucode = ct.sigungucode
+	</select>
+	
+	<!-- 인기순 -->
+	<select id="selectAllPopular" resultType="CourseDTO" parameterType="map">
+	    SELECT ct.contentid, ct.title, ct.sidoCode, sd.nickName, sg.sigungucode, sg.name, ct.firstimage
+	    FROM (
+	        SELECT ROWNUM AS rnum , contentid, title, sidoCode, sigungucode, firstimage, view_cnt
+	        FROM contentInfoTbl
+	        <where>
+	            <if test="sidoCode != 0">
+	                AND sidoCode = #{sidoCode}
+	            </if>
+	            AND contenttypeid = '25' 
+	        </where>
+	        ORDER BY view_cnt DESC
+	    ) ct
+	    JOIN SidoTbl sd ON sd.sidocode = ct.sidocode
+	    JOIN SigunguTbl sg ON sg.sigungucode = ct.sigungucode
+	    WHERE rnum BETWEEN #{startList} AND #{endList} 
+	    ORDER BY rnum
+	</select>
+	
+	<!-- 상세페이지에 표출할 내용 -->
+	<select id="selectOne" resultType="CourseDTO" parameterType="string">
+	    select ct.contentid, ct.title, ct.sidoCode, sd.nickName, sg.sigungucode, sg.name,  ct.overview, ct.view_cnt
+        from contentInfoTbl ct
+        join SidoTbl sd on sd.sidocode = ct.sidocode
+        join SigunguTbl sg on sg.sigungucode = ct.sigungucode
+        where contentid = #{contentId}
+	</select>
+	<!-- 상세페이지에 표출할 코스 목록 내용 -->
+	<select id="selectCourse" resultType="CourseContentDTO" parameterType="String">
+	    select ca.contentid, ca.subcontentid, ca.num, ct.title, ct.address, 
+	           ct.mapx, ct.mapy, ct.firstimage, ct.contenttypeid, ct.cat2
+	    from courseareaTbl ca
+	    join contentInfoTbl ct on ca.subcontentid = ct.contentid
+	    where ca.contentid= #{contentId}
+	    order by num
+	</select>
+	
+    
+    
+</mapper>        
