@@ -1,6 +1,6 @@
 ![홈화면](https://github.com/moonsae/Travel-Website/blob/main/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-03-18%20182634.png)
 
-# 대한민국 구석구석
+# TourKorea
 
 ## 💬프로젝트 소개
 한국관광공사의 '대한민국 구석구석'을 클론 코딩하였습니다. Spring Framework와 FastAPI를 통해 구현하였습니다.
