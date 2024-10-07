@@ -19,8 +19,5 @@ public class RecSpot {
 	String mapy;
 	float mlevel;
 	String firstimage;
-	String mcategory;
-	String scategory;
-	int searchcount;
 	String overview;
 }

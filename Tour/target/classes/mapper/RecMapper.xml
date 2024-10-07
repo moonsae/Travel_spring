@@ -11,9 +11,25 @@
     </select> 
     <select id="getRandom" resultType="RecSpot">
 	    <![CDATA[
-	        SELECT * FROM CONTENTINFOTBL
+	        SELECT 
+	            contentid,
+	            contenttypeid,
+	            cat1,
+	            cat2,
+	            cat3,
+	            title,
+	            sidocode,
+	            sigungucode,
+	            address,
+	            createdtime,
+	            modifiedtime,
+	            mapx,
+	            mapy,
+	            mlevel,
+	            firstimage,
+	            overview
+	        FROM CONTENTINFOTBL
 	        WHERE REC = 1
-	        SAMPLE(1)
 	        AND ROWNUM <= 10
 	    ]]>
 	</select>  
