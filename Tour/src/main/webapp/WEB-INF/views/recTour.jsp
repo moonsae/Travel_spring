@@ -727,7 +727,7 @@
 					selectPlaces: selectPlaces
 				};
 				$.ajax({
-					url: 'http://localhost:8080/api/recommend',
+					url: 'http://129.154.56.13:8080/api/recommend',
 					type: 'POST',
 					contentType: 'application/json',
 					dataType: 'json',
